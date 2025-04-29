@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from openpyxl import Workbook, load_workbook
 import os
@@ -10,6 +10,10 @@ CORS(app)
 def get_excel_filename():
     today = datetime.today()
     return f'fae_tasks_{today.year}-{today.month:02d}.xlsx'
+
+@app.route('/')
+def serve_index():
+    return send_file('index.html')
 
 @app.route('/submit-task', methods=['POST'])
 def submit_task():
